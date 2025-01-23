@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
+
+[ProducesResponseType(200)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status404NotFound)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 public class GithubController : ControllerBase
 {
     private readonly GithubService _githubService;
@@ -16,7 +21,9 @@ public class GithubController : ControllerBase
     }
 
 
-
+    /// <summary>
+    /// Busca as principais informações de um repositório
+    /// </summary>
     [HttpGet("{userName}")]
     //[Authorize]
     public async Task<ActionResult<List<Repository>>> GetRepositories(string userName)
@@ -32,6 +39,9 @@ public class GithubController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Busca informações de um repositório específico 
+    /// </summary>
     [HttpGet("{owner}/{repo}")]
     //[Authorize]
     public async Task<ActionResult<Repository>> GetRepositoryDetails(string owner, string repo)
@@ -47,6 +57,9 @@ public class GithubController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Obtém a url do avatar do usuário
+    /// </summary>
     [HttpGet("avatar/{userName}")]
     //[Authorize]
     public async Task<ActionResult<string>> GetUserAvatar(string userName)

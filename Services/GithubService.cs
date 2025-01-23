@@ -11,6 +11,7 @@ public class GithubService
     public GithubService(HttpClient httpClient)
     {
         _httpClient = httpClient;
+
     }
 
     public async Task<List<Repository>> GetPublicRepositories(string userName)

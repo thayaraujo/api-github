@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,12 +27,19 @@ builder.Services.AddAuthentication(options =>
 });
 
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Teste Blip - REST API consulta GitHub",
+        Description = "REST API desenvolvida utilizando C# e .NET Core para consulta à API do GitHub",
+    });
+});
 builder.Services.AddHttpClient<GithubService>(client =>
 {
     client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; GitHubApiIntegration)");
@@ -38,12 +47,8 @@ builder.Services.AddHttpClient<GithubService>(client =>
 
 var app = builder.Build();
 
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -52,5 +57,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseDefaultFiles(new DefaultFilesOptions
+{
+    DefaultFileNames = new
+     List<string> { "index.html" }
+});
+app.UseStaticFiles();
 
 app.Run();
