@@ -8,9 +8,9 @@ Contém o fluxo de um chatbot em JSON. O chatbot foi desenvolvido utilizando a p
 ### Link de acesso à API e Endpoints:
 https://consultagithub.azurewebsites.net/swagger/index.html
 
-Listar repositórios de um usuário -> /api/Github/{userName}
-Listar um repositório específico -> /api/Github/{owner}/{repo}
-Ober url do avatar do usuário -> /api/Github/avatar/{userName}
+> **Listar repositórios de um usuário**: /api/Github/{userName}
+> **Listar um repositório específico**: /api/Github/{owner}/{repo}
+> **Obter url do avatar do usuário**: /api/Github/avatar/{userName}
 
 ----
 
